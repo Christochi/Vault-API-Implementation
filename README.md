@@ -1,12 +1,12 @@
 # terraform-vault-setup
 
 ## Description
-The Terraform configuration comprises 2 sub-directories: modules and starter.
+The Terraform configuration comprises 2 sub-directories: modules and setup.
 
-#### Modules
+#### modules
 It contains configuration files for seting up KV-V2 secret engine, Approle auth method, and userpass. 
 
-#### Starter
+#### setup
 - root module resides here, plus resource output file. Root module contains setup for ACLs, auth methods, and secret engine
 - you can select any module by commenting the others for example: If you want a kv and userpass, comment the other modules in the root module
 
