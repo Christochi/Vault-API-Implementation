@@ -7,7 +7,7 @@ resource "vault_auth_backend" "approle" {
   # modify some configurations of userpass
   tune {
 
-    max_lease_ttl = var.ttl # max time-to-live
+    max_lease_ttl = var.ttl # max time-to-live lease for approle
 
   }
 
@@ -21,9 +21,11 @@ resource "vault_approle_auth_backend_role" "my_role" {
 
   role_name      = var.role # name of the role
   token_policies = ["default", var.policy]
+
+  # The maximum lifetime for generated tokens in number of seconds
   #   token_max_ttl = var.token_max_time
-  #   token_ttl = 1600
-  secret_id_ttl = 120
+  #   token_ttl = 1600 
+  secret_id_ttl = 120 # duration of secret ID
 
 }
 
