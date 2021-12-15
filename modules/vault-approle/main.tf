@@ -7,7 +7,7 @@ resource "vault_auth_backend" "approle" {
   # modify some configurations of userpass
   tune {
 
-    max_lease_ttl = var.ttl # max time-to-live lease for approle
+    max_lease_ttl = var.ttl # max lease duration for approle 
 
   }
 
