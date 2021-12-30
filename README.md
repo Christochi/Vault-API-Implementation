@@ -8,7 +8,7 @@ It contains configuration files for seting up KV-V2 secret engine, Approle auth 
 
 #### setup
 - root module resides here, plus resource output file. Root module contains setup for ACLs, auth methods, and secret engine
-- you can select any module by commenting the others for example: If you want a kv, userpass or kv, comment the other modules in the root module
+- you can select any module by commenting the others for example: If you want a kv, userpass or approle, comment the other modules in the root module
 - comment any output data you don't need in the root module's output.tf
 
 ## Requirement
