@@ -18,7 +18,7 @@ It contains configuration files for seting up KV-V2 secret engine, Approle auth 
 - set up the dev server: `vault server -dev`
 - include in the CLI:
     - `export VAULT_ADDR` environment variable
-    - `export VAULT_TOKEN` environment variable. If using `approle`, there no need to export the **VAULT_TOKEN**
+    - `export VAULT_TOKEN` environment variable. If using `approle`, there no need to export the **VAULT_TOKEN** (root roken)
 - go to setup/:
     - run `terraform init` cmd
     - run `terraform plan` cmd
