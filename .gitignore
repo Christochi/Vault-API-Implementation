@@ -14,3 +14,4 @@
 *.ignore
 
 *.svg
+go.*
