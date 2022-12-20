@@ -10,15 +10,12 @@ Test Type: Unit Test
 package test
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/hashicorp/vault/api"
-
-	"github.com/hashicorp/vault/api/auth/approle"
 
 	"github.com/palantir/stacktrace"
 	"github.com/stretchr/testify/assert"
@@ -70,22 +67,25 @@ func TestApprole(t *testing.T) {
 
 	// generate secret-id
 	roleName := "myrole"
-	secretID := createSecretID(client, approlePath, roleName)
+	secretID := generateSecretID(client, approlePath, roleName)
 
-	if roleID == "" {
+	// generate role-id
+	roleID := generateRoleID(client, approlePath, roleName)
 
-		t.Error("empty string")
+	// if roleID != "" {
 
-	} else {
+	// 	t.Errorf("want %s", roleID)
 
-		// generate token
-		token := generateToken(client, expectedApprolePath, roleID, secretID)
+	// } //else {
 
-		if token == "" {
-			t.Error("no token was generated")
-		}
+	// generate token
+	token := generateToken(client, expectedApprolePath, roleID, secretID)
 
+	if token == "" {
+		t.Error("no token was generated")
 	}
+
+	// }
 
 }
 
@@ -121,12 +121,12 @@ func isApproleMounted(c *api.Client, approlePath string) (bool, *api.MountOutput
 }
 
 // generate secret-id
-func createSecretID(c *api.Client, approlePath string, role string) string {
+func generateSecretID(c *api.Client, approlePath string, roleName string) string {
 
 	var secretID string // secret-id
 
 	// approle auth backend path for secret id
-	path := "auth/" + approlePath + "role/" + role + "/secret-id"
+	path := "auth/" + approlePath + "role/" + roleName + "/secret-id"
 
 	// write to backend to generate secret-id
 	secret, err := c.Logical().Write(path, map[string]interface{}{})
@@ -154,30 +154,64 @@ func createSecretID(c *api.Client, approlePath string, role string) string {
 
 }
 
-// generate token
-func generateToken(c *api.Client, approlePath string, roleID string, secretID string) string {
+// generate role-id
+func generateRoleID(c *api.Client, approlePath string, roleName string) string {
 
-	// initialize SecretID struct
-	secret := &approle.SecretID{
-		FromString: secretID,
-	}
+	var roleID string // secret-id
 
-	// initializes new approle auth method interface
-	approleAuth, err := approle.NewAppRoleAuth(roleID, secret)
+	// approle auth backend path for secret id
+	path := "auth/" + approlePath + "role/" + roleName + "/role-id"
+
+	// write to backend to generate secret-id
+	role, err := c.Logical().Read(path)
 	if err != nil {
 
-		err = stacktrace.Propagate(err, "could not create approle auth method interface")
+		err = stacktrace.Propagate(err, "no role-id")
 		fmt.Println(err)
 		os.Exit(1)
 
 	}
 
-	// create context
-	ctx := context.Background()
+	// extract secret-id
+	for key, id := range role.Data {
 
-	// generate token for vault client
-	login, _ := approleAuth.Login(ctx, c)
+		if key == "role_id" {
 
-	return login.Auth.ClientToken
+			// type assertion provides access to an interface's value
+			roleID = id.(string)
+
+		}
+
+	}
+
+	return roleID
 
 }
+
+// generate token
+// func generateToken(c *api.Client, approlePath string, roleID string, secretID string) string {
+
+// 	// initialize SecretID struct
+// 	secret := &approle.SecretID{
+// 		FromString: secretID,
+// 	}
+
+// 	// initializes new approle auth method interface
+// 	approleAuth, err := approle.NewAppRoleAuth(roleID, secret)
+// 	if err != nil {
+
+// 		err = stacktrace.Propagate(err, "could not create approle auth method interface")
+// 		fmt.Println(err)
+// 		os.Exit(1)
+
+// 	}
+
+// 	// create context
+// 	ctx := context.Background()
+
+// 	// generate token for vault client
+// 	login, _ := approleAuth.Login(ctx, c)
+
+// 	return login.Auth.ClientToken
+
+// }
