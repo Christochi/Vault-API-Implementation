@@ -10,12 +10,14 @@ Test Type: Unit Test
 package test
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/hashicorp/vault/api"
+	"github.com/hashicorp/vault/api/auth/approle"
 
 	"github.com/palantir/stacktrace"
 	"github.com/stretchr/testify/assert"
@@ -189,29 +191,29 @@ func generateRoleID(c *api.Client, approlePath string, roleName string) string {
 }
 
 // generate token
-// func generateToken(c *api.Client, approlePath string, roleID string, secretID string) string {
+func generateToken(c *api.Client, approlePath string, roleID string, secretID string) string {
 
-// 	// initialize SecretID struct
-// 	secret := &approle.SecretID{
-// 		FromString: secretID,
-// 	}
+	// initialize SecretID struct
+	secret := &approle.SecretID{
+		FromString: secretID,
+	}
 
-// 	// initializes new approle auth method interface
-// 	approleAuth, err := approle.NewAppRoleAuth(roleID, secret)
-// 	if err != nil {
+	// initializes new approle auth method interface
+	approleAuth, err := approle.NewAppRoleAuth(roleID, secret)
+	if err != nil {
 
-// 		err = stacktrace.Propagate(err, "could not create approle auth method interface")
-// 		fmt.Println(err)
-// 		os.Exit(1)
+		err = stacktrace.Propagate(err, "could not create approle auth method interface")
+		fmt.Println(err)
+		os.Exit(1)
 
-// 	}
+	}
 
-// 	// create context
-// 	ctx := context.Background()
+	// create context
+	ctx := context.Background()
 
-// 	// generate token for vault client
-// 	login, _ := approleAuth.Login(ctx, c)
+	// generate token for vault client
+	login, _ := approleAuth.Login(ctx, c)
 
-// 	return login.Auth.ClientToken
+	return login.Auth.ClientToken
 
-// }
+}
