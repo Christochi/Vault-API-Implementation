@@ -10,7 +10,7 @@ Test Type: Unit Test
 package test
 
 import (
-	// "context"
+	"context"
 	"fmt"
 	"os"
 	"testing"
@@ -18,7 +18,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/hashicorp/vault/api"
 
-	// "github.com/hashicorp/vault/api/auth/approle"
+	"github.com/hashicorp/vault/api/auth/approle"
 
 	"github.com/palantir/stacktrace"
 	"github.com/stretchr/testify/assert"
@@ -151,5 +151,33 @@ func createSecretID(c *api.Client, approlePath string, role string) string {
 	}
 
 	return secretID
+
+}
+
+// generate token
+func generateToken(c *api.Client, approlePath string, roleID string, secretID string) string {
+
+	// initialize SecretID struct
+	secret := &approle.SecretID{
+		FromString: secretID,
+	}
+
+	// initializes new approle auth method interface
+	approleAuth, err := approle.NewAppRoleAuth(roleID, secret)
+	if err != nil {
+
+		err = stacktrace.Propagate(err, "could not create approle auth method interface")
+		fmt.Println(err)
+		os.Exit(1)
+
+	}
+
+	// create context
+	ctx := context.Background()
+
+	// generate token for vault client
+	login, _ := approleAuth.Login(ctx, c)
+
+	return login.Auth.ClientToken
 
 }
