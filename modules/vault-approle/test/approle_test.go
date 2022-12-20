@@ -129,6 +129,7 @@ func createSecretID(c *api.Client, approlePath string, role string) string {
 	// approle auth backend path for secret id
 	path := "auth/" + approlePath + "role/" + role + "/secret-id"
 
+	// write to backend to generate secret-id
 	secret, err := c.Logical().Write(path, map[string]interface{}{})
 	if err != nil {
 
@@ -138,7 +139,7 @@ func createSecretID(c *api.Client, approlePath string, role string) string {
 
 	}
 
-	// fetch secret-id
+	// extract secret-id
 	for key, id := range secret.Data {
 
 		if key == "secret_id" {
