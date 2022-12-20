@@ -118,3 +118,36 @@ func isApproleMounted(c *api.Client, approlePath string) (bool, *api.MountOutput
 	return false, mountData
 
 }
+
+// generate secret-id
+func createSecretID(c *api.Client, approlePath string, role string) string {
+
+	var secretID string // secret-id
+
+	// approle auth backend path for secret id
+	path := "auth/" + approlePath + "role/" + role + "/secret-id"
+
+	secret, err := c.Logical().Write(path, map[string]interface{}{})
+	if err != nil {
+
+		err = stacktrace.Propagate(err, "no secret")
+		fmt.Println(err)
+		os.Exit(1)
+
+	}
+
+	// fetch secret-id
+	for key, id := range secret.Data {
+
+		if key == "secret_id" {
+
+			// type assertion provides access to an interface's value
+			secretID = id.(string)
+
+		}
+
+	}
+
+	return secretID
+
+}
