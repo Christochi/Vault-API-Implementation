@@ -40,9 +40,6 @@ func TestApprole(t *testing.T) {
 	// Run "terraform init" and "terraform apply". Fail the test if there are any errors.
 	terraform.InitAndApply(t, terraformOptions)
 
-	// // terrform output
-	// expectedRoleData := terraform.OutputMap(t, terraformOptions, "role_id")
-
 	/*
 	 construct approle path: in the data structure, all auth methods in sys/auths have a "/". for example: mount path is "approle/"
 	*/
