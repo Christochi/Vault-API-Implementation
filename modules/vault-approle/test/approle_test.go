@@ -67,9 +67,6 @@ func TestApprole(t *testing.T) {
 	// assert approle was enabled
 	assert.True(t, approleExist, "approle doesn't exist")
 
-	// // extract role-name and role-id
-	// roleName, roleID := extractRoleID(expectedRoleData)
-
 	// var secretID string // secret id for generating approle token
 
 	// if roleName == "" {
