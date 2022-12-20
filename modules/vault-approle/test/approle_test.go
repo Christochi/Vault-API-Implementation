@@ -67,18 +67,9 @@ func TestApprole(t *testing.T) {
 	// assert approle was enabled
 	assert.True(t, approleExist, "approle doesn't exist")
 
-	// var secretID string // secret id for generating approle token
-
-	// if roleName == "" {
-
-	// 	t.Error("empty string")
-
-	// } else {
-
-	// 	// generate secret-id
-	// 	secretID = createSecretID(client, approlePath, roleName)
-
-	// }
+	// generate secret-id
+	var secretID string // secret id for generating approle token
+	secretID = createSecretID(client, approlePath, roleName)
 
 	// if roleID == "" {
 
