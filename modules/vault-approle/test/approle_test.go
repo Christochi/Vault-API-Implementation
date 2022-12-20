@@ -72,20 +72,20 @@ func TestApprole(t *testing.T) {
 	roleName := "myrole"
 	secretID := createSecretID(client, approlePath, roleName)
 
-	// if roleID == "" {
+	if roleID == "" {
 
-	// 	t.Error("empty string")
+		t.Error("empty string")
 
-	// } else {
+	} else {
 
-	// 	// generate token
-	// 	token := generateToken(client, expectedApprolePath, roleID, secretID)
+		// generate token
+		token := generateToken(client, expectedApprolePath, roleID, secretID)
 
-	// 	if token == "" {
-	// 		t.Error("no token was generated")
-	// 	}
+		if token == "" {
+			t.Error("no token was generated")
+		}
 
-	// }
+	}
 
 }
 
