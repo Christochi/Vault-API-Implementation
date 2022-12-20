@@ -17,6 +17,7 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/hashicorp/vault/api"
+
 	// "github.com/hashicorp/vault/api/auth/approle"
 
 	"github.com/palantir/stacktrace"
@@ -68,6 +69,7 @@ func TestApprole(t *testing.T) {
 	assert.True(t, approleExist, "approle doesn't exist")
 
 	// generate secret-id
+	roleName := "myrole"
 	var secretID string // secret id for generating approle token
 	secretID = createSecretID(client, approlePath, roleName)
 
