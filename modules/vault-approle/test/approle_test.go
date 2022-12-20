@@ -70,8 +70,7 @@ func TestApprole(t *testing.T) {
 
 	// generate secret-id
 	roleName := "myrole"
-	var secretID string // secret id for generating approle token
-	secretID = createSecretID(client, approlePath, roleName)
+	secretID := createSecretID(client, approlePath, roleName)
 
 	// if roleID == "" {
 
