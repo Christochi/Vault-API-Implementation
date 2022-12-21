@@ -2,6 +2,7 @@
 Test Case:
   - confirm approle auth method was mounted
   - generate secret id
+  - generate role id
   - generate token
 
 Test Type: Unit Test
@@ -74,18 +75,17 @@ func TestApprole(t *testing.T) {
 	// generate role-id
 	roleID := generateRoleID(client, approlePath, roleName)
 
-	// if roleID != "" {
+	if roleID == "" || secretID == "" {
 
-	// 	t.Errorf("want %s", roleID)
+		t.Error("either role-id, secret-id or both was not generated")
 
-	// } //else {
-
-	// generate token
-	token := generateToken(client, expectedApprolePath, roleID, secretID)
-
-	if token == "" {
-		t.Error("no token was generated")
-	}
+	} //else {
+	// 	// generate token
+	/*token :=*/
+	generateToken(t, client, roleID, secretID)
+	// 	if token == "" {
+	// 		t.Error("no token was generated")
+	// 	}
 
 	// }
 
@@ -191,7 +191,7 @@ func generateRoleID(c *api.Client, approlePath string, roleName string) string {
 }
 
 // generate token
-func generateToken(c *api.Client, approlePath string, roleID string, secretID string) string {
+func generateToken(t *testing.T, c *api.Client, roleID string, secretID string) {
 
 	// initialize SecretID struct
 	secret := &approle.SecretID{
@@ -213,7 +213,10 @@ func generateToken(c *api.Client, approlePath string, roleID string, secretID st
 
 	// generate token for vault client
 	login, _ := approleAuth.Login(ctx, c)
+	// login.Auth.ClientToken
 
-	return login.Auth.ClientToken
+	if login == nil {
+		t.Errorf("wnat %#v", login)
+	}
 
 }
