@@ -22,10 +22,32 @@ resource "vault_generic_endpoint" "user" {
   # login details
   data_json = <<EOT
   {
-    "policies": [ "mypolicy" ],
+    "policies": ["mypolicy"],
     "password": "changeme"
   }
   EOT
 
   depends_on = [vault_auth_backend.userpass] # explicit dependency
 }
+
+# Error authenticating: Error making API request.
+
+# URL: PUT http://127.0.0.1:8200/v1/auth/userpass/login/intern
+# Code: 400. Errors:
+
+# * missing client token
+
+
+# resource "vault_generic_endpoint" "login" {
+
+#   path = "auth/${var.mount-path}/login/${var.user}"
+
+#   data_json = <<EOT
+#   {
+#     "password": "changeme"
+#   }
+#   EOT
+
+#   depends_on = [vault_generic_endpoint.user] # explicit dependency
+
+# }

@@ -1,4 +1,4 @@
-# terraform-vault-setup
+# Terraform-Vault-Setup
 
 ## Description
 The Terraform configuration comprises 2 sub-directories: modules and setup.
