@@ -1,5 +1,8 @@
 # Terraform-Vault-Setup
 
+## How To Run This Project:
+- execute the Dockerfile to create an image with all the necessary codes and dependencies like Hashicorp Vault and Golang
+- 
 ## Description
 The Terraform configuration comprises 2 sub-directories: modules and setup.
 
