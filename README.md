@@ -1,8 +1,8 @@
 # Terraform-Vault-Setup
 
 ## How To Run This Project:
-- execute the Dockerfile to create an image with all the necessary codes and dependencies like Hashicorp Vault and Golang
-- 
+- execute the Dockerfile to create an image with all the necessary code files and dependencies like Hashicorp Vault and Golang
+- Go to [Requirement](#requirement)
 ## Description
 The Terraform configuration comprises 2 sub-directories: modules and setup.
 
@@ -15,8 +15,8 @@ It contains configuration files for seting up KV-V2 secret engine, Approle auth 
 - comment any output data you don't need in the root module's output.tf
 
 ## Requirement
-- install vault on your local machine
-
+- install hashicorp vault 
+- install terraform
 ## Setup
 - set up the dev server: `vault server -dev`
 - include in the CLI:
