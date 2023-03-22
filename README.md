@@ -9,7 +9,7 @@ You can run this project in 2 ways. If you prefer to use docker, follow step 1. 
 The Terraform configuration comprises 2 sub-directories: modules and setup.
 
 #### modules
-It contains configuration files for seting up KV-V2 secret engine, Approle auth method, and Userpass. 
+It contains configuration files for seting up KV-V2 secret engine, Approle auth method, Userpass and Go files for testing functionality of the different aspects of vault
 
 #### setup
 - root module resides here, plus resource output file. Root module contains setup for ACLs, auth methods, and secret engine
