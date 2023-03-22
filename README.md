@@ -1,7 +1,7 @@
 # Terraform-Vault-Setup
 
 ## How To Run This Project:
-You can run this project in 2 ways. If you prefer to use docker, follow step 1. Step 2 requires you to download hashicorp vault and terraform in your local machine:
+You can run this project in 2 ways. If you prefer to use docker, follow step 1. Step 2 requires you to download hashicorp vault and terraform to your local machine:
 - Execute the [Dockerfile](./Dockerfile) to create an image with all the necessary code files and dependencies like Hashicorp Vault and Golang and then follow the steps in [Setup](#setup-1)
 - Go to [Requirement](#requirement) and then follow the steps in [Setup](#setup-1)
 
