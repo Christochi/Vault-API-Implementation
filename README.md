@@ -2,7 +2,7 @@
 
 ## How To Run This Project:
 You can run this project in 2 ways. If you prefer to use docker, follow step 1. Step 2 requires you to download hashicorp vault and terraform to your local machine:
-- Execute the [Dockerfile](./Dockerfile) to create an image with all the necessary code files and dependencies like Hashicorp Vault and Golang and then follow the steps in [Setup](#setup-1)
+- run `docker pull christochi/vault-docker` in your terminal to pull the image with all the necessary code files and dependencies like Hashicorp Vault and Golang installed and configured in it, and then follow the steps in [Setup](#setup-1)
 - Go to [Requirement](#requirement) and then follow the steps in [Setup](#setup-1)
 
 ## Description
@@ -21,7 +21,7 @@ It contains configuration files for seting up KV-V2 secret engine, Approle auth 
 - clone git repo
 
 ## Setup
-- set up the dev server: `vault server -dev`
+- set up the dev server from the terminal: `vault server -dev`
 - include in the CLI:
     - `export VAULT_ADDR` environment variable
     - `export VAULT_TOKEN` environment variable. If using `approle`, there no need to export the **VAULT_TOKEN** (root roken)
